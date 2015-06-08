@@ -345,8 +345,9 @@ class auditd (
 
   # Install package
   package { $package_name:
-    ensure => 'present',
-    before => [ File['/etc/audit/auditd.conf'], Concat['audit-file'] ],
+    ensure        => 'present',
+    allow_virtual => false,
+    before        => [ File['/etc/audit/auditd.conf'], Concat['audit-file'] ],
   }
 
   # Configure required config files
