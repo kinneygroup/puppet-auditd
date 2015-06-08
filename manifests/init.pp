@@ -343,6 +343,8 @@ class auditd (
   validate_string($service_restart)
   validate_string($service_stop)
 
+  include auditd::auditd
+
   # Install package
   package { $package_name:
     ensure        => 'present',
