@@ -391,6 +391,7 @@ class auditd (
       hasstatus => true,
       restart   => $service_restart,
       stop      => $service_stop,
+      require   => Class['auditd::auditd'],
       subscribe => [ File['/etc/audit/auditd.conf'], Concat['audit-file'] ],
     }
   }
