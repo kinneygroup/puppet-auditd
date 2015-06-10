@@ -343,8 +343,6 @@ class auditd (
   validate_string($service_restart)
   validate_string($service_stop)
 
-  include auditd::auditd
-
   # Install package
   package { $package_name:
     ensure        => 'present',
@@ -391,9 +389,18 @@ class auditd (
       hasstatus => true,
       restart   => $service_restart,
       stop      => $service_stop,
-      require   => Class['auditd::auditd'],
       subscribe => [ File['/etc/audit/auditd.conf'], Concat['audit-file'] ],
     }
   }
-
+    # Set rules
+  auditd::rule { 'delete other rules':
+    content => '-D',
+    order   => '00',
+    before  => File['/etc/audit/auditd.conf'],
+  }
+  auditd::rule { 'set buffer size':
+    content => '-b 8192',
+    order   => '01',
+    before  => File['/etc/audit/auditd.conf'],
+  }
 }

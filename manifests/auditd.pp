@@ -1,6 +1,4 @@
 class auditd::auditd {
-  include '::auditd'
-
   auditd::rule { 'delete other rules':
     content => '-D',
     order => '00',
